@@ -157,6 +157,11 @@ int IntList::count() const {
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
+    //Check to see if replacing list with itself 
+    if (head == source.head) {
+	    return *this; 
+    }
+
     //Deleting the list
     if (head) { 
     	Node* curr1 = head; 
