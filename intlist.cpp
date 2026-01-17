@@ -1,20 +1,50 @@
 // intlist.cpp
 // Implements class IntList
-// Leila Stuart, January 15th,16th 2026 
+// Leila Stuart, January 15th,16th,17th 2026 
 
 #include "intlist.h"
 
 #include <iostream>
 using std::cout;
 
-// copy constructor
+// copy constructor--I asked ChatGPT why there was a segmentation fault here,
+//     explicitly telling it not to alter my code as per the allowed use of AI
+//     tools expressed in the syllabus. It pointed out various lines that 
+//     could lead to a segmentation fault, so I decided to just rewrite the 
+//     copy constructor thinking more about when I call other functions like 
+//     push_back. In the end, my issue was that I was not initializing head and
+//     tail for the list that I wanted to copy to.  
 IntList::IntList(const IntList& source) {
-    return; //FINISH THIS
+    if (source.head == nullptr) { 
+	    head = nullptr; 
+	    tail = nullptr; 
+	    return;
+    }
+
+    head = nullptr; 
+    tail = nullptr;
+
+    Node* curr = source.head; 
+    while (curr) {
+	    push_back(curr->info); 
+	    curr = curr->next; 
+    }
+    return; 
 }
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    return; //FINISH THIS
+    if (!head) {
+	    return; 
+    }
+
+    Node* curr = head; 
+    while (curr) {
+	    Node* temp = curr->next;
+	    delete curr; 
+	    curr = temp; 
+    }
+    return;
 }
 
 // return sum of values in list
@@ -106,14 +136,18 @@ void IntList::push_back(int value) {
 // return count of values
 int IntList::count() const { 
     int count = 0; 
-    if (!head) {
+    if (head == nullptr) {
 	    return count; 
     }
 
     Node* curr = head; 
-    while (curr) {
+    while (curr != nullptr) {
 	    count += 1; 
-	    curr = curr->next; 
+	    if (curr->next) {
+		    curr = curr->next; 
+	    } else {
+		    return count; 
+	    }
     }
 
     return count;
@@ -123,8 +157,31 @@ int IntList::count() const {
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
-    //IMPLEMENT THIS AFTER OTHERS 
-    return *this;
+    //Deleting the list
+    if (head) { 
+    	Node* curr1 = head; 
+    	while (curr1) {
+	  	Node*temp = curr1->next; 
+	  	delete curr1; 
+	  	curr1 = temp; 
+    	}
+    }
+    //Adding in the new values
+    if (source.head == nullptr) {
+	    head = nullptr; 
+	    tail = nullptr; 
+	    return *this; 
+    }
+
+    head = nullptr;
+    tail = nullptr;
+
+    Node* curr2 = source.head; 
+    while (curr2) {
+	    push_back(curr2->info);  
+	    curr2 = curr2->next;
+    }
+    return *this; 
 }
 
 // constructor sets up empty list

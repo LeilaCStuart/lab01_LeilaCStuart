@@ -70,5 +70,19 @@ int main(int argc, char *argv[]) {
     list2.print();
     cout << endl;
     // Write your own test code for other methods
+    IntList list3(list1);
+    cout << "List 3: \n   "; 
+    list3.print();
+    cout << endl << "   count: " << list3.count() << endl;
+    cout << "   sum: " << list3.sum() << endl;
+    cout << "   max: " << list3.max() << endl;
+    cout << "   average: " << list3.average() << endl;
+    cout << "   List 3 after push_front(3), then push_front(1): \n   ";
+    list3.push_front(3);
+    list3.push_front(1);
+    list3.print();
+    cout << endl;
+    
+    
     return 0;
 }

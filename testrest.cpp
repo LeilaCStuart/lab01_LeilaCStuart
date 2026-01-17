@@ -17,6 +17,7 @@ void test_copyconstructor(){
     }
 
     IntList list2(list1);
+
     assert(list1.count()== 5);
     assert(list2.count()==list1.count());
     for(int i = 0; i<5; i++){
