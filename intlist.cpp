@@ -105,22 +105,17 @@ void IntList::push_back(int value) {
 
 // return count of values
 int IntList::count() const { 
-    int count = 1; 
-    Node* curr = nullptr; 
-
-    if (head == nullptr) {
- 	   return 0; 
+    int count = 0; 
+    if (!head) {
+	    return count; 
     }
 
-    curr = head; 
-    if (curr == nullptr) {
-	    return 0; 
-    } else {
-	    while (curr->next) {
-		count += 1; 
-		curr = curr->next;
-	    }
+    Node* curr = head; 
+    while (curr) {
+	    count += 1; 
+	    curr = curr->next; 
     }
+
     return count;
 }
 
